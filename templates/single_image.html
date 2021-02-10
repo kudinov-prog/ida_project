@@ -1,0 +1,17 @@
+<a href="{% url 'index' %}">Назад к списку</a>
+
+<title>Изображение</title>
+
+<h1>{{ item.id }}</h1>
+
+<form method="POST">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Отправить</button>
+</form>
+
+{% if item.image_url %}
+    <a><img src="{{ item.image_url }}" /></a>
+{% else %}
+    <a><img src="{{ item.image_file.url }}" /></a>
+{% endif %}

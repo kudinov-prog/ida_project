@@ -1,0 +1,12 @@
+<a href="{% url 'index' %}">Назад к списку</a>
+
+<title>Новое изображение</title>
+
+<h1>Новое изображение</h1>
+
+<form method="POST">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Отправить</button>
+
+</form>
