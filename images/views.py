@@ -1,12 +1,11 @@
-from django.shortcuts import render, redirect, reverse, get_object_or_404
 from django.core.files.base import ContentFile
+from django.shortcuts import get_object_or_404, redirect, render, reverse
 from django.views.generic import ListView
-
-from .models import Addimage
-from .forms import ImageForm, ImageSizeForm
-
-from sorl.thumbnail import get_thumbnail
 from PIL import Image
+from sorl.thumbnail import get_thumbnail
+
+from .forms import ImageForm, ImageSizeForm
+from .models import Addimage
 
 
 class IndexListView(ListView):
