@@ -1,10 +1,8 @@
 <a href="{% url 'index' %}">Назад к списку</a>
 
-<title>Изображение</title>
+<title>Изображение {{ item.id }}</title>
 
-<h1>{{ item.id }}</h1>
-
-<form method="POST">
+<form method="POST" enctype="multipart/form-data">
     {% csrf_token %}
     {{ form.as_p }}
     <button type="submit">Отправить</button>
