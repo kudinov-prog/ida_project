@@ -4,18 +4,16 @@ from .models import Addimage
 from django.core.files import File
 from urllib.request import urlopen
 from tempfile import NamedTemporaryFile
-from django.core.files import File
-
-from urllib import request
 import os
 
 from django.core.exceptions import ValidationError
+
 
 class ImageForm(forms.ModelForm):
 
     class Meta:
         model = Addimage
-        fields = ['image_url', 'image_file']  
+        fields = ['image_url', 'image_file']
 
     def clean(self):
         super().clean()
@@ -23,13 +21,12 @@ class ImageForm(forms.ModelForm):
         url = all_data['image_url']
         file_im = all_data['image_file']
 
-        if not self.cleaned_data['image_url'] and not self.cleaned_data['image_file']:
+        if not url and not file_im:
             raise ValidationError('Заполните хотя бы одно поле')
 
-        if self.cleaned_data['image_url'] and self.cleaned_data['image_file']:
+        if url and file_im:
             raise ValidationError('Заполните только одно из полей')
-        
-        
+
         if not file_im and url:
             img_temp = NamedTemporaryFile(delete=True)
             img_temp.write(urlopen(url).read())
