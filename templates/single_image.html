@@ -1,6 +1,8 @@
+<title>Изображение {{ item.id }}</title>
+
 <a href="{% url 'index' %}">Назад к списку</a>
 
-<title>Изображение {{ item.id }}</title>
+<h1>{{ item.image_file.name }}</h1>
 
 <form method="POST" enctype="multipart/form-data">
     {% csrf_token %}
@@ -8,8 +10,4 @@
     <button type="submit">Отправить</button>
 </form>
 
-{% if item.image_url %}
-    <a><img src="{{ item.image_url }}" /></a>
-{% else %}
-    <a><img src="{{ item.image_file.url }}" /></a>
-{% endif %}
+<a><img src="{{ item.image_file.url }}" /></a>

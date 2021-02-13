@@ -6,7 +6,7 @@
 <ul>
     {% for item in index %}
     <p>
-        <a href="{% url 'edit_image' item.id %}" target="_blank">{{ item.id }}</a>
+        <a href="{% url 'edit_image' item.id %}" target="_blank">{{ item.image_file.name }}</a>
     </p>
     {% endfor %}
 </ul>

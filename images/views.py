@@ -1,11 +1,14 @@
 from django.shortcuts import render, redirect, reverse, get_object_or_404
 from django.core.files.base import ContentFile
 from django.views.generic import ListView
+from django.conf import settings
 
 from .models import Addimage
 from .forms import ImageForm, ImageSizeForm
 
 from sorl.thumbnail import get_thumbnail
+from PIL import Image
+import os
 
 
 class IndexListView(ListView):
@@ -43,13 +46,17 @@ def edit_image(request, image_id):
     if form.is_valid():
         width = form.cleaned_data.get('width')
         height = form.cleaned_data.get('height')
-        
-        if image.image_file:
-            image_url = image.image_file
-        else:
-            image_url = image.image_url
 
-        resized = get_thumbnail(image_url, f"{width}x{height}")
+        image_url = image.image_file
+
+        img = Image.open(image_url)
+        img_ratio = float(img.size[0]) / img.size[1] 
+        if width is None:
+            width = height * img_ratio
+        elif height is None:
+            height = width / img_ratio
+
+        resized = get_thumbnail(image_url, f"{int(width)}x{int(height)}")
         image.image_file.save(resized.name, ContentFile(resized.read()), True)
 
         return render(request, 'single_image.html', 
