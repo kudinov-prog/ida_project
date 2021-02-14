@@ -6,20 +6,20 @@ from django import forms
 from django.core.exceptions import ValidationError
 from django.core.files import File
 
-from .models import Addimage
+from .models import Picture
 
 
 class ImageForm(forms.ModelForm):
 
     class Meta:
-        model = Addimage
+        model = Picture
         fields = ['image_url', 'image_file']
 
     def clean(self):
         super().clean()
-        all_data = self.cleaned_data
-        url = all_data['image_url']
-        file_im = all_data['image_file']
+        content = self.cleaned_data
+        url = content['image_url']
+        file_im = content['image_file']
 
         if not url and not file_im:
             raise ValidationError('Заполните хотя бы одно поле')
@@ -30,11 +30,11 @@ class ImageForm(forms.ModelForm):
         if not file_im and url:
             img_temp = NamedTemporaryFile(delete=True)
             img_temp.write(urlopen(url).read())
-            all_data['image_file'] = File(img_temp, name=os.path.basename(url))
-            all_data['image_url'] = url
+            content['image_file'] = File(img_temp, name=os.path.basename(url))
+            content['image_url'] = url
             img_temp.flush()
 
-        return all_data
+        return content
 
 
 class ImageSizeForm(forms.Form):

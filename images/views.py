@@ -5,17 +5,17 @@ from PIL import Image
 from sorl.thumbnail import get_thumbnail
 
 from .forms import ImageForm, ImageSizeForm
-from .models import Addimage
+from .models import Picture
 
 
 class IndexListView(ListView):
-    """ Вывод главной страницы с картинками
+    """ Вывод главной страницы со списком изображений
     """
     template_name = 'index.html'
     context_object_name = 'index'
 
     def get_queryset(self):
-        images = Addimage.objects.all()
+        images = Picture.objects.all()
         return images
 
 
@@ -34,9 +34,9 @@ def new_image(request):
 
 
 def edit_image(request, image_id):
-    """ Страница изменения разрешения изображения
+    """ Страница изображения с формой изменения размеров
     """
-    image = get_object_or_404(Addimage, id=image_id)
+    image = get_object_or_404(Picture, id=image_id)
 
     form = ImageSizeForm(request.POST or None, files=request.FILES or None)
 
@@ -48,6 +48,7 @@ def edit_image(request, image_id):
 
         img = Image.open(image_url)
         img_ratio = float(img.size[0]) / img.size[1]
+
         if width is None:
             width = height * img_ratio
         elif height is None:

@@ -1,7 +1,7 @@
 from django.db import models
 
 
-class Addimage(models.Model):
+class Picture(models.Model):
     image_url = models.URLField(
         blank=True,
         null=True,

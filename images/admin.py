@@ -1,10 +1,10 @@
 from django.contrib import admin
 
-from .models import Addimage
+from .models import Picture
 
 
 class ImageAdmin(admin.ModelAdmin):
     list_display = ('pk',)
 
 
-admin.site.register(Addimage, ImageAdmin)
+admin.site.register(Picture, ImageAdmin)
